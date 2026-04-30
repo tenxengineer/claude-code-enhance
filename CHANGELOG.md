@@ -43,5 +43,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tier C (minimal):** no project context → prompts improved using
   prompt engineering principles only
 
-[Unreleased]: https://github.com/<YOUR-USER>/claude-code-enhance/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/<YOUR-USER>/claude-code-enhance/releases/tag/v1.0.0
+[Unreleased]: https://github.com/pilotparpikhodjaev/claude-code-enhance/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/pilotparpikhodjaev/claude-code-enhance/releases/tag/v1.0.0
