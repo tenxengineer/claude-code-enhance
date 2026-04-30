@@ -7,10 +7,10 @@
   },
   "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/pilotparpikhodjaev/claude-code-enhance",
+  "homepage": "https://github.com/tenxengineer/claude-code-enhance",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pilotparpikhodjaev/claude-code-enhance.git"
+    "url": "https://github.com/tenxengineer/claude-code-enhance.git"
   },
   "keywords": [
     "claude-code",

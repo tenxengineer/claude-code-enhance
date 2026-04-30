@@ -31,7 +31,7 @@ sequence to suit your timezone and bandwidth.
 Show HN: Claude-Code-Enhance – Free, local prompt enhancer for Claude Code
 ```
 
-**URL field:** `https://github.com/pilotparpikhodjaev/claude-code-enhance`
+**URL field:** `https://github.com/tenxengineer/claude-code-enhance`
 
 **First comment (post immediately after submitting):**
 
@@ -82,7 +82,7 @@ Open to feedback, especially:
 - Whether the slash command UX is good enough or whether the external-
   editor approach (Ctrl+G in Claude Code) is worth building
 
-Repo: https://github.com/pilotparpikhodjaev/claude-code-enhance
+Repo: https://github.com/tenxengineer/claude-code-enhance
 ```
 
 **Engagement plan for first 4 hours:**
@@ -157,14 +157,14 @@ keybinding system. Slash command is the closest equivalent.
 ```
 Install:
 
-  /plugin marketplace add pilotparpikhodjaev/claude-code-enhance
+  /plugin marketplace add tenxengineer/claude-code-enhance
   /plugin install claude-code-enhance
 
 Or manually clone + run bootstrap.sh.
 
 Try it: /enhance <some rough idea>
 
-Repo + docs: https://github.com/pilotparpikhodjaev/claude-code-enhance
+Repo + docs: https://github.com/tenxengineer/claude-code-enhance
 ```
 
 **Tweet 6 (call for feedback):**
@@ -218,7 +218,7 @@ library matters more than the enhancer itself.
 > the credits, the cloud, or the lock-in. The unexpected discovery: the
 > enhancer matters less than the lessons library that backs it.
 >
-> Repo: https://github.com/pilotparpikhodjaev/claude-code-enhance
+> Repo: https://github.com/tenxengineer/claude-code-enhance
 
 ## The problem nobody talks about
 
@@ -329,7 +329,7 @@ The philosophy:
 ## How to install
 
 ```bash
-git clone https://github.com/pilotparpikhodjaev/claude-code-enhance.git
+git clone https://github.com/tenxengineer/claude-code-enhance.git
 cd claude-code-enhance
 bash scripts/bootstrap.sh
 ```
@@ -346,7 +346,7 @@ Looking for:
 
 Open issues, file PRs, or reach me on Twitter.
 
-Repo: https://github.com/pilotparpikhodjaev/claude-code-enhance
+Repo: https://github.com/tenxengineer/claude-code-enhance
 ````
 
 **Post-publish plan:**
@@ -375,7 +375,7 @@ Repo: https://github.com/pilotparpikhodjaev/claude-code-enhance
 **Submission template (PR description):**
 
 ```
-Adds [claude-code-enhance](https://github.com/pilotparpikhodjaev/claude-code-enhance)
+Adds [claude-code-enhance](https://github.com/tenxengineer/claude-code-enhance)
 — Free, local, MIT-licensed prompt enhancer for Claude Code with a
 companion scar-tissue lesson library. Inspired by Augment Code's
 prompt enhancer; works fully offline of any cloud service.
