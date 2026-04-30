@@ -2,6 +2,8 @@
 
 > Augment-style prompt enhancer + scar-tissue lesson library + project codemap for [Claude Code](https://claude.com/claude-code). Free, local, MIT-licensed.
 
+**English** · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Русский](docs/i18n/README.ru.md)
+
 ![demo](assets/demo.svg)
 
 Three skills that work together to make your AI coding agent behave more like a distinguished engineer who's been on your codebase for 18 months — instead of a smart consultant who just walked in.

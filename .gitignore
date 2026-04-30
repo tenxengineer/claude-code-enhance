@@ -26,3 +26,6 @@ build/
 # Claude Code working artifacts (these would be in users' projects, not in this plugin repo)
 .codemap/
 .serena/
+
+# Internal launch playbook — kept local, not published
+LAUNCH.md
