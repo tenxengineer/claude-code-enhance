@@ -1,12 +1,75 @@
 # claude-code-enhance
 
-> Augment-style prompt enhancer + scar-tissue lesson library + project codemap for [Claude Code](https://claude.com/claude-code). Free, local, MIT-licensed.
+> A scar-tissue lessons library for [Claude Code](https://claude.com/claude-code) that compounds across projects, plus a prompt enhancer that cross-references it before any code is written. Free. Local. MIT.
 
 **English** · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Русский](docs/i18n/README.ru.md)
 
 ![demo](assets/demo.svg)
 
-Three skills that work together to make your AI coding agent behave more like a distinguished engineer who's been on your codebase for 18 months — instead of a smart consultant who just walked in.
+## The pain (you've felt this too)
+
+I've been using Claude Code daily since day one. After hundreds of sessions across five projects, here's what I learned:
+
+**The biggest quality killer isn't the model. It's the prompt and the agent's total lack of memory between projects.**
+
+Every project, the same scene plays out:
+
+- I write a vague prompt: _"refactor the auth middleware"_
+- The agent guesses at scope, picks an interpretation, writes code
+- Three iterations later we converge on what I actually wanted
+- I burn an hour I didn't need to burn
+
+And worse — the same mistakes repeat across projects:
+
+- Project A: I learn that `localStorage.getItem('orgId')` breaks on org switch (forgeable, doesn't refresh on token re-issue). Fix takes 2 hours.
+- Project B, four months later: the agent suggests `localStorage.getItem('orgId')` for tenant scope. I catch it. We refactor. **Same fix, second time.**
+- Project C, eight months later: same suggestion. Same correction. **Third time.**
+
+Each project starts the agent cold. There's no compounding scar tissue. The lessons I paid for in pain don't transfer.
+
+## The fix
+
+Two things, working together:
+
+**1. A scar-tissue lessons library that compounds across every project.** One markdown file per domain (auth, caching, migrations, NestJS, Prisma…). Each lesson has a stable ID:
+
+```markdown
+## L-AUTH-001 — Tenant context comes from JWT, not localStorage
+
+**Tags:** auth, jwt, multi-tenant
+**Severity:** high
+
+**What broke:** Dashboard read `localStorage.getItem('orgId')` —
+silently broke on org switch (token didn't refresh; value forgeable).
+
+**Never do again:** Tenant scope from JWT only.
+
+**Fix:** see commit abc123
+```
+
+When you prompt with architectural verbs (`design`, `refactor`, `migrate`, `add caching`, `auth`), a skill auto-fires that loads relevant domain files **before** producing any plan. The agent now knows your scar tissue from project A when it works on project C.
+
+CodeRabbit can reference IDs in PR comments. PR descriptions can cite "fixes regression of L-AUTH-001." The IDs are the protocol — they survive heading renames, tooling changes, even maintainer changes.
+
+**2. A `/enhance` slash command that lifts vague intent into structured prompts.**
+
+```
+/enhance refactor the auth middleware
+```
+
+Loads project context (codemap, lessons, recent git activity, codebase structure via Serena MCP if installed), applies prompt-engineering principles, and shows you a structured prompt — goal, scope, constraints (with cited lesson IDs), success criteria, surfaced ambiguities, suggested approach. You review/edit/scrap before any code is written.
+
+The structured prompt is the deliverable. The lessons library is the durable thing underneath.
+
+## What you get
+
+| Skill                   | What it does                                                                                                      | When it fires                                                                            |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `/enhance <rough idea>` | Loads project context, applies prompt-engineering principles, produces a structured prompt you review/edit/submit | User-controlled (you type it)                                                            |
+| `consult-scars`         | Auto-fires before architectural plans; loads relevant lessons from your scar-tissue library                       | Triggered by `design`, `refactor`, `migrate`, `add caching`, `auth`, etc. in your prompt |
+| `/refresh-codemap`      | Regenerates per-project `hotfiles.md` and `recent.md` from git history                                            | User-controlled (run weekly)                                                             |
+
+Plus optional infrastructure (lessons library, project codemap, SessionStart hooks) that the skills use when present and gracefully skip when not. Bring your own lessons; ship the library to your team via the stable IDs.
 
 ```
                     Your rough intent
@@ -33,17 +96,7 @@ Three skills that work together to make your AI coding agent behave more like a 
         └─────────────────────────────────┘
 ```
 
-## What you get
-
-| Skill                   | What it does                                                                                                       | When it fires                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `/enhance <rough idea>` | Loads codebase context, applies prompt engineering principles, produces a structured prompt you review/edit/submit | User-controlled (you type it)                                                                 |
-| `consult-scars`         | Loads relevant lessons from your scar-tissue library before producing architectural plans                          | Auto-fires on prompts containing `design`, `refactor`, `migrate`, `add caching`, `auth`, etc. |
-| `/refresh-codemap`      | Regenerates `hotfiles.md` and `recent.md` from git history for the current project                                 | User-controlled (run weekly or before major work)                                             |
-
-Plus optional infrastructure (lessons library, codemap, SessionStart hooks) that the skills use when present and gracefully skip when not.
-
-## Why this exists
+## Why this exists (and what it isn't)
 
 Existing alternatives have real downsides for solo devs and small teams:
 
