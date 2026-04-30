@@ -1,0 +1,25 @@
+{
+  "name": "claude-code-enhance",
+  "description": "Augment-style prompt enhancer + scar-tissue lesson library + project codemap for Claude Code. Free, local, MIT-licensed alternative to proprietary code-context tools. Lifts rough developer intent into production-quality, codebase-aware prompts before execution.",
+  "author": {
+    "name": "Javokhirbek Parpikhodjaev",
+    "email": "pilotparpikhodjaev@gmail.com"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/<REPLACE-WITH-YOUR-GITHUB>/claude-code-enhance",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<REPLACE-WITH-YOUR-GITHUB>/claude-code-enhance.git"
+  },
+  "keywords": [
+    "claude-code",
+    "prompt-enhancer",
+    "prompt-engineering",
+    "augment-code",
+    "codebase-context",
+    "lessons-learned",
+    "scar-tissue",
+    "ai-coding-agent"
+  ]
+}
