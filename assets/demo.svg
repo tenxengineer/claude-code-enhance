@@ -1,5 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 720" font-family="ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="13">
-  <!-- Drop shadow filter -->
+  <!--
+    Animated demo of /enhance in Claude Code.
+    Total cycle: ~10s, loops indefinitely.
+
+    Sequence:
+      0.0s  empty terminal, blinking cursor at prompt
+      0.5s  typing "/enhance fix the bug where field area is computed wrong"
+      2.8s  prompt complete, "Loading..." appears
+      3.5s  output section reveals begin (staggered)
+      9.0s  full output visible, cursor blinks at submit prompt
+     10.0s  loop restart
+  -->
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="6" stdDeviation="12" flood-opacity="0.35"/>
@@ -8,6 +19,13 @@
       <stop offset="0%" stop-color="#1e1e2e"/>
       <stop offset="100%" stop-color="#181825"/>
     </linearGradient>
+
+    <!-- ClipPath that animates from 0 to full width to create typing effect -->
+    <clipPath id="typing-clip">
+      <rect x="0" y="-20" width="0" height="40">
+        <animate attributeName="width" from="0" to="540" begin="0.5s" dur="2.3s" fill="freeze"/>
+      </rect>
+    </clipPath>
   </defs>
 
   <!-- Window frame -->
@@ -22,88 +40,116 @@
   <circle cx="62" cy="38" r="6.5" fill="#f9e2af"/>
   <circle cx="82" cy="38" r="6.5" fill="#a6e3a1"/>
 
-  <!-- Title text -->
   <text x="490" y="42" fill="#7f849c" text-anchor="middle" font-size="12" font-weight="500">
-    claude-code-enhance — /enhance demo
+    claude-code — /enhance demo
   </text>
 
   <!-- Terminal content -->
-  <g transform="translate(40, 80)">
-    <!-- Prompt line - typed -->
-    <text fill="#cdd6f4">
-      <tspan x="0" y="0" fill="#a6e3a1">❯</tspan>
-      <tspan dx="6" fill="#cdd6f4">/enhance fix the bug where field area is computed wrong</tspan>
-    </text>
+  <g transform="translate(40, 90)">
 
-    <!-- Loading indicator - subtle animated -->
-    <text x="0" y="28" fill="#7f849c" font-style="italic">
-      Loading codemap, lessons, and codebase context...
-      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
-    </text>
+    <!-- Prompt arrow (always visible) -->
+    <text x="0" y="0" fill="#a6e3a1" font-weight="600">❯</text>
 
-    <!-- Output begins -->
-    <text x="0" y="64" fill="#94e2d5" font-weight="600" font-size="14">
-      # Enhanced Prompt
-    </text>
-    <text x="0" y="84" fill="#7f849c" font-style="italic">
-      &gt; Original rough intent: fix the bug where field area is computed wrong
-    </text>
+    <!-- Typed command (revealed via clip-path animation) -->
+    <g clip-path="url(#typing-clip)">
+      <text x="16" y="0" fill="#cdd6f4">/enhance fix the bug where field area is computed wrong</text>
+    </g>
 
-    <!-- Intent class -->
-    <text x="0" y="116" fill="#fab387" font-weight="600">## Intent class</text>
-    <text x="0" y="134" fill="#cdd6f4">debug</text>
-
-    <!-- Goal -->
-    <text x="0" y="162" fill="#fab387" font-weight="600">## Goal</text>
-    <text x="0" y="180" fill="#cdd6f4">Identify and fix the bug causing incorrect field area computation,</text>
-    <text x="0" y="196" fill="#cdd6f4">preserving the distinction between areaHa (computed) and</text>
-    <text x="0" y="212" fill="#cdd6f4">officialAreaHa (manual government quota override).</text>
-
-    <!-- Scope -->
-    <text x="0" y="240" fill="#fab387" font-weight="600">## Scope</text>
-    <text x="0" y="258" fill="#a6e3a1" font-weight="600">**In:**</text>
-    <text x="0" y="276" fill="#cdd6f4">- apps/api/src/fields/fields.service.ts</text>
-    <text x="0" y="292" fill="#cdd6f4">- apps/api/src/fields/dto/{create,update}-field.dto.ts</text>
-    <text x="0" y="308" fill="#cdd6f4">- PostGIS expression: ST_Area(geometry::geography) / 10000</text>
-
-    <!-- Constraints -->
-    <text x="0" y="336" fill="#fab387" font-weight="600">## Constraints</text>
-    <text x="0" y="354" fill="#a6e3a1" font-weight="600">**Lessons that apply:**</text>
-    <text x="0" y="372" fill="#cdd6f4">- </text>
-    <text x="14" y="372" fill="#f9e2af" font-weight="600">L-DATA-001</text>
-    <text x="98" y="372" fill="#cdd6f4"> — No fake seed data; use real polygons in regression test</text>
-
-    <!-- Assumptions -->
-    <text x="0" y="400" fill="#fab387" font-weight="600">## Implicit assumptions to confirm</text>
-    <text x="0" y="418" fill="#cdd6f4">[ ] Which layer has the bug? (API / web / mobile / Prisma query)</text>
-    <text x="0" y="434" fill="#cdd6f4">[ ] Do you have a reproduction case (specific field UUID + expected)?</text>
-    <text x="0" y="450" fill="#cdd6f4">[ ] Backfill scope? (forward-only / all rows / audit-logged)</text>
-
-    <!-- Skills -->
-    <text x="0" y="478" fill="#fab387" font-weight="600">## Skills to invoke</text>
-    <text x="0" y="496" fill="#cdd6f4">- </text>
-    <text x="14" y="496" fill="#89b4fa" font-weight="600">superpowers:systematic-debugging</text>
-    <text x="0" y="512" fill="#cdd6f4">- </text>
-    <text x="14" y="512" fill="#89b4fa" font-weight="600">consult-scars</text>
-    <text x="120" y="512" fill="#7f849c"> (already auto-fired)</text>
-    <text x="0" y="528" fill="#cdd6f4">- </text>
-    <text x="14" y="528" fill="#89b4fa" font-weight="600">codex</text>
-    <text x="56" y="528" fill="#7f849c"> — adversarial review post-implementation</text>
-
-    <!-- Risk -->
-    <text x="0" y="556" fill="#fab387" font-weight="600">## Risk: </text>
-    <text x="76" y="556" fill="#f9e2af" font-weight="700">medium</text>
-    <text x="0" y="574" fill="#cdd6f4">Touches data integrity for core domain. Wrong backfill could destroy</text>
-    <text x="0" y="590" fill="#cdd6f4">historical records — get backfill decision in writing first.</text>
-
-    <!-- Submit prompt -->
-    <text x="0" y="624" fill="#cdd6f4" font-weight="600">
-      Submit this enhanced version (s), edit first (e), or scrap (x)?
-    </text>
-
-    <!-- Cursor -->
-    <rect x="0" y="638" width="9" height="14" fill="#cdd6f4">
-      <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+    <!-- Inline cursor that follows the typing position -->
+    <rect y="-10" width="9" height="14" fill="#cdd6f4">
+      <animate attributeName="x" values="16;16;556;556" keyTimes="0;0.05;0.28;1" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;1;0" keyTimes="0;0.83;0.83;0.85" dur="10s" repeatCount="indefinite"/>
+      <!-- Blink during initial idle (0-0.5s) -->
+      <animate attributeName="fill-opacity" values="1;0;1" dur="0.6s" begin="0s" end="0.5s"/>
     </rect>
+
+    <!-- Loading indicator -->
+    <text x="0" y="32" fill="#7f849c" font-style="italic" opacity="0">
+      Loading codemap, lessons, and codebase context...
+      <animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.3s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;0.4;1;0.4;1;0.4;1" begin="2.8s" dur="0.7s" repeatCount="1"/>
+      <!-- Fade out before output appears -->
+      <animate attributeName="opacity" from="1" to="0.5" begin="3.5s" dur="0.3s" fill="freeze"/>
+    </text>
+
+    <!-- Output sections — each reveals with staggered fade -->
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="3.5s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="68" fill="#94e2d5" font-weight="600" font-size="14"># Enhanced Prompt</text>
+      <text x="0" y="88" fill="#7f849c" font-style="italic">&gt; Original rough intent: fix the bug where field area is computed wrong</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="4.0s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="120" fill="#fab387" font-weight="600">## Intent class</text>
+      <text x="0" y="138" fill="#cdd6f4">debug</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="4.5s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="166" fill="#fab387" font-weight="600">## Goal</text>
+      <text x="0" y="184" fill="#cdd6f4">Identify and fix the bug causing incorrect field area computation,</text>
+      <text x="0" y="200" fill="#cdd6f4">preserving the distinction between areaHa (computed) and</text>
+      <text x="0" y="216" fill="#cdd6f4">officialAreaHa (manual government quota override).</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="5.0s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="244" fill="#fab387" font-weight="600">## Scope</text>
+      <text x="0" y="262" fill="#a6e3a1" font-weight="600">**In:**</text>
+      <text x="0" y="280" fill="#cdd6f4">- apps/api/src/fields/fields.service.ts</text>
+      <text x="0" y="296" fill="#cdd6f4">- apps/api/src/fields/dto/{create,update}-field.dto.ts</text>
+      <text x="0" y="312" fill="#cdd6f4">- PostGIS expression: ST_Area(geometry::geography) / 10000</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="5.7s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="340" fill="#fab387" font-weight="600">## Constraints</text>
+      <text x="0" y="358" fill="#a6e3a1" font-weight="600">**Lessons that apply:**</text>
+      <text x="0" y="376" fill="#cdd6f4">- </text>
+      <text x="14" y="376" fill="#f9e2af" font-weight="600">L-DATA-001</text>
+      <text x="98" y="376" fill="#cdd6f4"> — No fake seed data; use real polygons in regression test</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="6.4s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="404" fill="#fab387" font-weight="600">## Implicit assumptions to confirm</text>
+      <text x="0" y="422" fill="#cdd6f4">[ ] Which layer has the bug? (API / web / mobile / Prisma query)</text>
+      <text x="0" y="438" fill="#cdd6f4">[ ] Do you have a reproduction case (specific field UUID + expected)?</text>
+      <text x="0" y="454" fill="#cdd6f4">[ ] Backfill scope? (forward-only / all rows / audit-logged)</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="7.1s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="482" fill="#fab387" font-weight="600">## Skills to invoke</text>
+      <text x="0" y="500" fill="#cdd6f4">- </text>
+      <text x="14" y="500" fill="#89b4fa" font-weight="600">superpowers:systematic-debugging</text>
+      <text x="0" y="516" fill="#cdd6f4">- </text>
+      <text x="14" y="516" fill="#89b4fa" font-weight="600">consult-scars</text>
+      <text x="120" y="516" fill="#7f849c"> (already auto-fired)</text>
+      <text x="0" y="532" fill="#cdd6f4">- </text>
+      <text x="14" y="532" fill="#89b4fa" font-weight="600">codex</text>
+      <text x="56" y="532" fill="#7f849c"> — adversarial review post-implementation</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="7.8s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="560" fill="#fab387" font-weight="600">## Risk: </text>
+      <text x="76" y="560" fill="#f9e2af" font-weight="700">medium</text>
+      <text x="0" y="578" fill="#cdd6f4">Touches data integrity for core domain. Wrong backfill could destroy</text>
+      <text x="0" y="594" fill="#cdd6f4">historical records — get backfill decision in writing first.</text>
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="8.5s" dur="0.4s" fill="freeze"/>
+      <text x="0" y="624" fill="#cdd6f4" font-weight="600">
+        Submit this enhanced version (s), edit first (e), or scrap (x)?
+      </text>
+      <!-- Submit-prompt blinking cursor -->
+      <rect x="0" y="638" width="9" height="14" fill="#cdd6f4">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" begin="9s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
   </g>
 </svg>
